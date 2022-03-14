@@ -11,25 +11,6 @@
     )
   )
 
-(defun latexmk-utils-get-root-uri()
-  "Get root document URI."
-  (concat "file://" (file-truename latexmkrc-root-document))
-  )
-
-(defun lsp-latex-root-build (&optional sync)
-  "Build current tex file with latexmk, through texlab.
-Build synchronously if SYNC is non-nil."
-  (interactive "P")
-  (if sync
-      (lsp-latex--message-result-build
-       (lsp-request
-        "textDocument/build"
-        (list :textDocument (list :uri (latexmk-utils-get-root-uri)))))
-    (lsp-request-async
-     "textDocument/build"
-     (list :textDocument (list :uri (latexmk-utils-get-root-uri)))
-     #'lsp-latex--message-result-build)))
-
 (defun latexmk-utils-root-relative()
   "Find relative path to root document."
   (file-relative-name (file-name-directory latexmkrc-root-document)
