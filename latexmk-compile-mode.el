@@ -1,4 +1,7 @@
+;;; latexmk-compile-mode.el --- Compile from anywhere in project using latexmk
+;; Author: Bruno Morais <brunosmmm@gmail.com>
 
+;;; Code:
 (defun locate-latex-document-root(f)
   (if f
     (with-temp-buffer
