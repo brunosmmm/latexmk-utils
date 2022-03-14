@@ -29,6 +29,10 @@
         (concat (latexmk-utils-root-relative) (file-name-sans-extension latexmkrc-root-document-file)))
     nil))
 
+(defun latexmk-compile-mode-activate()
+  "Activate mode."
+  (latexmk-compile-mode 1)
+  )
 
 ;;;###autoload
 (define-minor-mode latexmk-compile-mode
@@ -52,6 +56,6 @@
   )
 
 ;;;###autoload
-(add-hook 'latex-mode-hook 'latexmk-compile-mode)
+(add-hook 'latex-mode-hook 'latexmk-compile-mode-activate)
 
 (provide 'latexmk-compile-mode)
