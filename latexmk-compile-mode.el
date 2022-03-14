@@ -52,7 +52,11 @@
 
 ;;;###autoload
 (add-hook 'latex-mode-hook #'latexmk-compile-mode)
+
+;;;###autoload
 (add-hook 'TeX-mode-hook #'latexmk-compile-mode)
+
+;;;###autoload
 (add-hook 'LaTeX-mode-hook #'latexmk-compile-mode)
 
 (provide 'latexmk-compile-mode)
