@@ -2,17 +2,15 @@
 ;; Author: Bruno Morais <brunosmmm@gmail.com>
 
 ;;; Code:
-(defun locate-latex-document-root(f)
+(defun latexmk-utils-locate-latex-document-root(f)
   (if f
     (with-temp-buffer
       (insert-file-contents-literally f)
-      (setq-local found (re-search-forward "@default_files\\s-*=\\s-*(\\([^,)]+\\))" nil t))
-      (if found
-          (replace-regexp-in-string "'" "" (match-string 1))
-        nil))
-    nil
-    )
-  )
+      (let ((found (re-search-forward "@default_files\\s-*=\\s-*(\\([^,)]+\\))" nil t)))
+        (if found
+            (replace-regexp-in-string "'" "" (match-string 1))
+          nil)))
+    nil))
 
 (defun latexmk-utils-root-relative()
   "Find relative path to root document."
@@ -40,7 +38,7 @@
                   (concat latexmkrc-directory ".latexmkrc")
                 nil))
   (setq-local latexmkrc-root-document-file
-              (locate-latex-document-root latexmkrc-file))
+              (latexmk-utils-locate-latex-document-root latexmkrc-file))
   (setq-local latexmkrc-root-document (if latexmkrc-root-document-file
                                           (concat latexmkrc-directory latexmkrc-root-document-file)
                                         nil))
