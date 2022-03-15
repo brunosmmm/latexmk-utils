@@ -12,19 +12,20 @@
           nil)))
     nil))
 
-(defun latexmk-utils-root-relative()
+(defun latexmk-utils-root-relative(root-document)
   "Find relative path to root document."
-  (file-relative-name (file-name-directory latexmkrc-root-document)
-                      (file-name-directory (buffer-file-name)))
-  )
+  (file-relative-name (file-name-directory root-document)
+                      (file-name-directory (buffer-file-name))))
 
-(defun latexmk-utils-master(&optional ext)
+(defun latexmk-utils-master(root-document &optional ext)
   (if (eq ext t)
       (setq ext TeX-default-extension))
   (if latexmkrc-root-document-file
       (if ext
-          (concat (latexmk-utils-root-relative) (file-name-sans-extension latexmkrc-root-document-file) "." ext)
-        (concat (latexmk-utils-root-relative) (file-name-sans-extension latexmkrc-root-document-file)))
+          (concat (latexmk-utils-root-relative root-document)
+                  (file-name-sans-extension (file-name-nondirectory root-document)) "." ext)
+        (concat (latexmk-utils-root-relative root-document)
+                (file-name-sans-extension (file-name-nondirectory root-document))))
     nil))
 
 ;;;###autoload
@@ -45,8 +46,7 @@
   (when latexmkrc-directory
     (setq-local lsp-latex-root-directory latexmkrc-directory))
   (when latexmkrc-root-document-file
-    (setq-local TeX-master (latexmk-utils-master)))
-  )
+    (setq-local TeX-master (latexmk-utils-master latexmkrc-root-document))))
 
 ;;;###autoload
 (add-hook 'LaTeX-mode-hook #'latexmk-compile-mode)
